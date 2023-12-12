@@ -29,7 +29,7 @@ namespace domain.Entities
 
         public void AddPhoneNumber(long phoneNumber)
         {
-            if (phoneNumber < 12)   
+            if (phoneNumber.ToString().Length < 10)   
                 throw new Exception("Phone number is invalid");
 
             PhoneNumber = phoneNumber;

@@ -26,6 +26,11 @@ namespace Application.UseCases.UserUseCases
 
         public async Task<NewUserResponse> Handle(NewUserRequest request, CancellationToken cancellationToken)
         {
+            var checkUser = await userRepository.GetUserByPhoneAsync(request.PhoneNumber);
+            
+            if (checkUser is not null)
+                throw new Exception("User already exists");
+
             var cryptoPassword = Crypto.CriptografarSenha(request.password);
 
             var user = new User(request.PhoneNumber, request.NickName, cryptoPassword);
