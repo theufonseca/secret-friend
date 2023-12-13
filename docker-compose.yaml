@@ -16,4 +16,4 @@ services:
       - "33061:3306"
   
 volumes:
-  secretfriend_esdata:
+  secretfriend_esdata: 

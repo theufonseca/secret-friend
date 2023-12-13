@@ -62,5 +62,12 @@ namespace Infra.Data.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task UpdateUserToConfirmedAsync(long phoneNumber)
+        {
+            await _connection.ExecuteScalarAsync(
+                "UPDATE user SET confirmed = 1 WHERE phonenumber = @PhoneNumber;",
+                new { PhoneNumber = phoneNumber });
+        }
     }
 }

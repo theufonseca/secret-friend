@@ -23,11 +23,15 @@ namespace Application.UseCases.UserUseCases
         public async Task<ConfirmUserResponse> Handle(ConfirmUserRequest request, CancellationToken cancellationToken)
         {
             var user = await userRepository.GetUserByConfirmCodeAsync(request.confirmCode);
+
             if (user is null)
                 throw new Exception("Confirmation not found or expirated");
 
+            if (user.Confirmed)
+                throw new Exception("User already confirmed");
+
             user.ConfirmUser();
-            await userRepository.UpdateUserAsync(user);
+            await userRepository.UpdateUserToConfirmedAsync(user.PhoneNumber);
             return new ConfirmUserResponse(true);
         }
     }

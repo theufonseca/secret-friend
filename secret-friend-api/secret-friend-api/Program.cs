@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using dotenv.net;
 using Infra.Data;
 using Infra.Data.Repository;
 using Infra.Notification.Services;
@@ -13,6 +14,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+DotEnv.Load();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -97,6 +99,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 

@@ -14,13 +14,13 @@ namespace Infra.Data.Models
         public string Nickname { get; set; }
         public string Password { get; set; }
         public string ConfirmationCode { get; set; }
-        public DateTime EndDateConfirmation { get; set; }
+        public DateTime EndateConfirmation { get; set; }
         public bool Confirmed { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public User GetUser()
         {
-            return new User(PhoneNumber, Nickname, Password, ConfirmationCode, EndDateConfirmation, Confirmed);
+            return new User(PhoneNumber, Nickname, Password, ConfirmationCode, EndateConfirmation, Confirmed);
         }
     }
 }

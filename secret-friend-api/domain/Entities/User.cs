@@ -70,12 +70,21 @@ namespace domain.Entities
 
         public void GenerateConfirmationCode()
         {
-            ConfirmationCode = Guid.NewGuid().ToString().Replace("-","");
-            EndDateConfirmation = DateTime.Now.AddDays(1);
+            Random random = new Random();
+            string codigo = "";
+
+            for (int i = 0; i < 6; i++)
+                codigo += random.Next(0, 9).ToString();
+            
+            ConfirmationCode = codigo;
+            EndDateConfirmation = DateTime.Now.AddMinutes(5);
         }
 
         public void ConfirmUser()
         {
+            if (EndDateConfirmation < DateTime.Now)
+                throw new Exception("Confirmation code expired");
+
             Confirmed = true;
         }
     }

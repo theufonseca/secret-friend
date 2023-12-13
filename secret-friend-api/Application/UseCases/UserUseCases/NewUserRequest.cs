@@ -37,7 +37,7 @@ namespace Application.UseCases.UserUseCases
             var user = new User(request.PhoneNumber, request.NickName, cryptoPassword);
             var userId = await userRepository.AddUserAsync(user);
 
-            await notificationService.SendConfirmationLinkAsync(request.PhoneNumber, user.ConfirmationCode);
+            notificationService.SendConfirmationLinkAsync(request.PhoneNumber, user.ConfirmationCode);
 
             return new NewUserResponse(userId);
         }
