@@ -9,6 +9,16 @@ namespace domain.Entities
 {
     public class User
     {
+        public long PhoneNumber { get; private set; }
+        public string Nickname { get; private set; }
+
+        [JsonIgnore]
+        public string Password { get; private set; }
+        public string ConfirmationCode { get; private set; }
+        public DateTime EndDateConfirmation { get; private set; }
+        public bool Confirmed { get; private set; }
+
+
         public User(long phoneNumber, string Nickname, string password)
         {
             AddPhoneNumber(phoneNumber);
@@ -18,14 +28,15 @@ namespace domain.Entities
             Confirmed = false;
         }
 
-        public long PhoneNumber { get; private set; }
-        public string Nickname { get; private set; }
-
-        [JsonIgnore]
-        public string Password { get; private set; }
-        public string ConfirmationCode { get; private set; }
-        public DateTime EndDateConfirmation { get; private set; }
-        public bool Confirmed { get; private set; }
+        public User(long phoneNumber, string nickname, string password, string confirmationCode, DateTime endDateConfirmation, bool confirmed)
+        {
+            AddPhoneNumber(phoneNumber);
+            AddNickname(nickname);
+            AddPassword(password);
+            ConfirmationCode = confirmationCode;
+            EndDateConfirmation = endDateConfirmation;
+            Confirmed = confirmed;
+        }
 
         public void AddPhoneNumber(long phoneNumber)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Infra.Security
 {
-    public static class Crypto
+    public class Crypto : ISecurity
     {
-        public static string CriptografarSenha(string senha)
+        public string EncryptPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] senhaBytes = Encoding.UTF8.GetBytes(senha);
+                byte[] senhaBytes = Encoding.UTF8.GetBytes(password);
                 byte[] senhaHash = sha256.ComputeHash(senhaBytes);
 
                 return BitConverter.ToString(senhaHash).Replace("-", "").ToLower();

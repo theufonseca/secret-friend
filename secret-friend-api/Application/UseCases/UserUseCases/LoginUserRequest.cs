@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces;
 using domain.Entities;
-using Infra.Security;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,10 +15,12 @@ namespace Application.UseCases.UserUseCases
     public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUserResponse>
     {
         private readonly IUserRepository userRepository;
+        private readonly ISecurity security;
 
-        public LoginUserRequestHandler(IUserRepository userRepository)
+        public LoginUserRequestHandler(IUserRepository userRepository, ISecurity security)
         {
             this.userRepository = userRepository;
+            this.security = security;
         }
 
         async public Task<LoginUserResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
@@ -29,7 +30,7 @@ namespace Application.UseCases.UserUseCases
             if (user is null)
                 throw new Exception("User or Password is wrong!");
 
-            var cryptoPassword = Crypto.CriptografarSenha(request.password);
+            var cryptoPassword = security.EncryptPassword(request.password);
 
             user.CheckPassword(cryptoPassword);
             return new LoginUserResponse(user);
