@@ -8,12 +8,27 @@ namespace domain.Entities
 {
     public class Game
     {
-        public int Id { get; set; }
-        public int IdUserHost { get; set; }
-        public string Name { get; set; }
-        public int? MaxValue { get; set; }
-        public int? MinValue { get; set; }
-        public bool IsFinished { get; set; }
+        public int Id { get; private set; }
+        public int IdUserHost { get; private set; }
+        public string Name { get; private set; }
+        public int? MaxValue { get; private set; }
+        public int? MinValue { get; private set; }
+        public bool IsFinished { get; private set; }
+
+        public Game(int id, int userIdHost, string name, int? maxValue, int? minValue, bool isFinished)
+        {
+            Id = id;
+            AddIdUserHost(userIdHost);
+            AddName(name);
+
+            if(maxValue is not null)
+                AddMaxValue(maxValue.Value);
+
+            if(minValue is not null)
+                AddMinValue(minValue.Value);
+
+            IsFinished = isFinished;
+        }
 
         public Game(int idUserHost, string name)
         {

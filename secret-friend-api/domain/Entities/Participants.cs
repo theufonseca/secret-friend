@@ -6,15 +6,67 @@ using System.Threading.Tasks;
 
 namespace domain.Entities
 {
-    public class Participants
+    public class Participant
     {
-        public int Id { get; set; }
-        public int IdGame { get; set; }
-        public int IdUser { get; set; }
-        public string? Option1 { get; set; }
-        public string? Option2 { get; set; }
-        public string? Option3 { get; set; }
-        public int? IdUserSecretFriend { get; set; }
-        public bool NotificationSent { get; set; }
+        public int Id { get; private set; }
+        public int IdGame { get; private set; }
+        public int IdUser { get; private set; }
+        public string? Option1 { get; private set; }
+        public string? Option2 { get; private set; }
+        public string? Option3 { get; private set; }
+        public int? IdUserSecretFriend { get; private set; }
+
+        public Participant(int id, int idGame, int idUser, string? option1, string? option2, string? option3, int? idUserSecretFriend)
+        {
+            Id = id;
+            AddIdGame(idGame);
+            AddIdUser(idUser);
+            AddOption1(option1);
+            AddOption2(option2);
+            AddOption3(option3);
+            AddIdUserSecretFriend(idUserSecretFriend);
+        }
+
+        private void AddIdUserSecretFriend(int? idUserSecretFriend)
+        {
+            IdUserSecretFriend = idUserSecretFriend;
+        }
+
+        public Participant(int idGame, int idUser)
+        {
+            AddIdGame(idGame);
+            AddIdUser(idUser);            
+        }
+
+        public void AddIdGame(int idGame)
+        {
+            if (idGame <= 0)
+                throw new Exception("IdGame must be greater than 0");
+
+            IdGame = idGame;
+        }
+
+        public void AddIdUser(int idUser)
+        {
+            if (idUser <= 0)
+                throw new Exception("IdUser must be greater than 0");
+
+            IdUser = idUser;
+        }
+
+        public void AddOption1(string? option1)
+        {
+            Option1 = option1;
+        }
+
+        public void AddOption2(string? option2)
+        {
+            Option2 = option2;
+        }
+
+        public void AddOption3(string? option3)
+        {
+            Option3 = option3;
+        }
     }
 }

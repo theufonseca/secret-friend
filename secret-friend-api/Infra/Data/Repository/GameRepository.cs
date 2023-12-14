@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Dapper;
 using domain.Entities;
+using Infra.Data.Models;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,18 @@ namespace Infra.Data.Repository
                 });
 
             return id;
+        }
+
+        public async Task<Game?> GetById(int idGame)
+        {
+            var gameDto = await _connection.QueryFirstOrDefaultAsync<GameDto>(
+                "SELECT * FROM game WHERE id = @Id",
+                new { Id = idGame });
+
+            if (gameDto is null)
+                return null;
+
+            return gameDto.GetGame();
         }
     }
 }

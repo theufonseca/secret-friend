@@ -10,5 +10,6 @@ namespace Application.Interfaces
     public interface IGameRepository
     {
         Task<int> AddGameAsync(Game game);
+        Task<Game?> GetById(int idGame);
     }
 }
