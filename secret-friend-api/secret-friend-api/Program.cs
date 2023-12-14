@@ -87,6 +87,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddTransient<DataContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddSingleton<ISecurity, Crypto>();
 
 var app = builder.Build();

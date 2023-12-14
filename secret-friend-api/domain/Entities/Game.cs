@@ -14,5 +14,43 @@ namespace domain.Entities
         public int? MaxValue { get; set; }
         public int? MinValue { get; set; }
         public bool IsFinished { get; set; }
+
+        public Game(int idUserHost, string name)
+        {
+            AddIdUserHost(idUserHost);
+            AddName(name);
+        }
+
+        public void AddIdUserHost(int idUserHost)
+        {
+            if (idUserHost <= 0)
+                throw new Exception("IdUserHost is invalid");
+
+            IdUserHost = idUserHost;
+        }
+
+        public void AddName(string name)
+        {
+            if (name.Length < 5)
+                throw new Exception("Name is invalid");
+
+            Name = name;
+        }
+
+        public void AddMaxValue(int maxValue)
+        {
+            if (maxValue < 0)
+                throw new Exception("MaxValue is invalid");
+
+            MaxValue = maxValue;
+        }
+
+        public void AddMinValue(int minValue)
+        {
+            if (minValue < 0)
+                throw new Exception("MinValue is invalid");
+
+            MinValue = minValue;
+        }
     }
 }

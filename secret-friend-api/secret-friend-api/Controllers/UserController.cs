@@ -49,6 +49,14 @@ namespace secret_friend_api.Controllers
             return Ok(token);
         }
 
+        [HttpPost("update")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateNickname([FromBody] UpdateNicknameRequest request)
+        {
+            var response = await mediator.Send(request);
+            return Ok(response);
+        }
+
         private TokenModel GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfig.SecretJwtKey!));

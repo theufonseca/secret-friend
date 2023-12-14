@@ -43,6 +43,18 @@ namespace Infra.Data.Repository
             return userDto.GetUser();
         }
 
+        public async Task<User?> GetUserById(int userId)
+        {
+            var user = await _connection.QueryFirstOrDefaultAsync<UserDto>(
+                                "SELECT * FROM user WHERE id = @UserId;",
+                                new { UserId = userId });
+
+            if (user is null)
+                return null;
+
+            return user.GetUser();
+        }
+
         public async Task<User?> GetUserByUserNameAsync(string userName)
         {
             var userDto = await _connection.QueryFirstOrDefaultAsync<UserDto>(
@@ -53,6 +65,21 @@ namespace Infra.Data.Repository
                 return null;
 
             return userDto.GetUser();
+        }
+
+        public async Task UpdateUser(int Id, User user)
+        {
+            await _connection.ExecuteAsync(
+                "UPDATE user SET " +
+                "nickname = @Nickname, " +
+                "password = @Password  " +
+                "WHERE id = @Id;",
+                new
+                {
+                    Id = Id,
+                    Nickname = user.Nickname,
+                    Password = user.Password,
+                });
         }
     }
 }
