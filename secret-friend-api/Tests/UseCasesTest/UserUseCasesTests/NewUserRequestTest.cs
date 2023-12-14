@@ -31,8 +31,6 @@ namespace Tests.UseCasesTest.UserUseCasesTests
             userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.UserName == "YudiT")));
             userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.Nickname == "Yudi Tamashiro")));
             userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.Password == "password")));
-            userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.Confirmed == false)));
-            userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => !string.IsNullOrEmpty(o.ConfirmationCode))));
         }
 
         [Test]

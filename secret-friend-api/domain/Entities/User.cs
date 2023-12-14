@@ -14,18 +14,12 @@ namespace domain.Entities
 
         [JsonIgnore]
         public string Password { get; private set; }
-        public string ConfirmationCode { get; private set; }
-        public DateTime EndDateConfirmation { get; private set; }
-        public bool Confirmed { get; private set; }
-
 
         public User(string userName, string Nickname, string password)
         {
             AddUser(userName);
             AddNickname(Nickname);
             AddPassword(password);
-            GenerateConfirmationCode();
-            Confirmed = false;
         }
 
         public User(string userName, string nickname, string password, string confirmationCode, DateTime endDateConfirmation, bool confirmed)
@@ -33,9 +27,6 @@ namespace domain.Entities
             AddUser(userName);
             AddNickname(nickname);
             AddPassword(password);
-            ConfirmationCode = confirmationCode;
-            EndDateConfirmation = endDateConfirmation;
-            Confirmed = confirmed;
         }
 
         public void AddUser(string userName)
@@ -66,26 +57,6 @@ namespace domain.Entities
         {
             if (inputPassword != Password)
                 throw new Exception("User or Password is wrong!");
-        }
-
-        public void GenerateConfirmationCode()
-        {
-            Random random = new Random();
-            string codigo = "";
-
-            for (int i = 0; i < 6; i++)
-                codigo += random.Next(0, 9).ToString();
-            
-            ConfirmationCode = codigo;
-            EndDateConfirmation = DateTime.Now.AddMinutes(5);
-        }
-
-        public void ConfirmUser()
-        {
-            if (EndDateConfirmation < DateTime.Now)
-                throw new Exception("Confirmation code expired");
-
-            Confirmed = true;
         }
     }
 }
