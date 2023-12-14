@@ -42,18 +42,11 @@ namespace secret_friend_api.Controllers
             var authClaims = new List<Claim>
             {
                 new (ClaimTypes.Name, response.User.Nickname),
-                new (ClaimTypes.Sid, response.User.PhoneNumber.ToString()),
+                new (ClaimTypes.Sid, response.User.UserName),
             };
 
             var token = GetToken(authClaims);
             return Ok(token);
-        }
-
-        [HttpPost("confirm")]
-        public async Task<IActionResult> Confirm([FromBody] ConfirmUserRequest request)
-        {
-            var response = await mediator.Send(request);
-            return Ok(response);
         }
 
         private TokenModel GetToken(List<Claim> authClaims)

@@ -9,7 +9,7 @@ namespace domain.Entities
 {
     public class User
     {
-        public long PhoneNumber { get; private set; }
+        public string UserName { get; private set; }
         public string Nickname { get; private set; }
 
         [JsonIgnore]
@@ -19,18 +19,18 @@ namespace domain.Entities
         public bool Confirmed { get; private set; }
 
 
-        public User(long phoneNumber, string Nickname, string password)
+        public User(string userName, string Nickname, string password)
         {
-            AddPhoneNumber(phoneNumber);
+            AddUser(userName);
             AddNickname(Nickname);
             AddPassword(password);
             GenerateConfirmationCode();
             Confirmed = false;
         }
 
-        public User(long phoneNumber, string nickname, string password, string confirmationCode, DateTime endDateConfirmation, bool confirmed)
+        public User(string userName, string nickname, string password, string confirmationCode, DateTime endDateConfirmation, bool confirmed)
         {
-            AddPhoneNumber(phoneNumber);
+            AddUser(userName);
             AddNickname(nickname);
             AddPassword(password);
             ConfirmationCode = confirmationCode;
@@ -38,12 +38,12 @@ namespace domain.Entities
             Confirmed = confirmed;
         }
 
-        public void AddPhoneNumber(long phoneNumber)
+        public void AddUser(string userName)
         {
-            if (phoneNumber.ToString().Length < 10)   
-                throw new Exception("Phone number is invalid");
+            if(userName.Length < 5)
+                throw new Exception("Username is to short");
 
-            PhoneNumber = phoneNumber;
+            UserName = userName;
         }
 
         public void AddNickname(string nickname)

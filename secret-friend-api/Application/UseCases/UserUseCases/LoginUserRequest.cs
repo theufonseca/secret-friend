@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.UserUseCases
 {
-    public record LoginUserRequest(long phoneNumber, string password) : IRequest<LoginUserResponse>;
+    public record LoginUserRequest(string userName, string password) : IRequest<LoginUserResponse>;
     public record LoginUserResponse(User User);
 
     public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUserResponse>
@@ -25,7 +25,7 @@ namespace Application.UseCases.UserUseCases
 
         async public Task<LoginUserResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
         {
-            var user = await userRepository.GetUserByPhoneAsync(request.phoneNumber);
+            var user = await userRepository.GetUserByUserNameAsync(request.userName);
 
             if (user is null)
                 throw new Exception("User or Password is wrong!");

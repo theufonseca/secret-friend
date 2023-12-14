@@ -10,7 +10,7 @@ namespace Infra.Data.Models
     public class UserDto
     {
         public int Id { get; set; }
-        public long PhoneNumber { get; set; }
+        public string UserName { get; set; }
         public string Nickname { get; set; }
         public string Password { get; set; }
         public string ConfirmationCode { get; set; }
@@ -20,7 +20,7 @@ namespace Infra.Data.Models
 
         public User GetUser()
         {
-            return new User(PhoneNumber, Nickname, Password, ConfirmationCode, EndateConfirmation, Confirmed);
+            return new User(UserName, Nickname, Password, ConfirmationCode, EndateConfirmation, Confirmed);
         }
     }
 }

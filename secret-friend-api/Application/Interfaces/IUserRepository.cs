@@ -11,7 +11,7 @@ namespace Application.Interfaces
     {
         Task<int> AddUserAsync(User user);
         Task<User?> GetUserByConfirmCodeAsync(string confirmCode);
-        Task<User?> GetUserByPhoneAsync(long phoneNumber);
+        Task<User?> GetUserByUserNameAsync(string userName);
         Task UpdateUserAsync(User user);
         Task UpdateUserToConfirmedAsync(long phoneNumber);
     }

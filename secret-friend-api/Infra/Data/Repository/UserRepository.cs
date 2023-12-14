@@ -17,12 +17,12 @@ namespace Infra.Data.Repository
         public async Task<int> AddUserAsync(User user)
         {
             var id = await _connection.ExecuteScalarAsync<int>(
-                "INSERT INTO user (phonenumber, nickname, password, confirmationcode, endateConfirmation, confirmed, createdAt) " +
-                "VALUES (@PhoneNumber, @NickName, @Password, @ConfirmationCode, @EndDateConfirmation, @Confirmed, @CreatedAt); " +
+                "INSERT INTO user (userName, nickname, password, confirmationcode, endateConfirmation, confirmed, createdAt) " +
+                "VALUES (@UserName, @NickName, @Password, @ConfirmationCode, @EndDateConfirmation, @Confirmed, @CreatedAt); " +
                 "SELECT LAST_INSERT_ID();",
                 new
                 {
-                    PhoneNumber = user.PhoneNumber,
+                    UserName = user.UserName,
                     NickName = user.Nickname,
                     Password = user.Password,
                     ConfirmationCode = user.ConfirmationCode,
@@ -46,11 +46,11 @@ namespace Infra.Data.Repository
             return userDto.GetUser();
         }
 
-        public async Task<User?> GetUserByPhoneAsync(long phoneNumber)
+        public async Task<User?> GetUserByUserNameAsync(string userName)
         {
             var userDto = await _connection.QueryFirstOrDefaultAsync<UserDto>(
-                                              "SELECT * FROM user WHERE phonenumber = @PhoneNumber;",
-                                              new { PhoneNumber = phoneNumber });
+                                              "SELECT * FROM user WHERE userName = @UserName;",
+                                              new { UserName = userName });
 
             if (userDto is null)
                 return null;

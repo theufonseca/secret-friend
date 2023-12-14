@@ -2,7 +2,6 @@ using Application.Interfaces;
 using dotenv.net;
 using Infra.Data;
 using Infra.Data.Repository;
-using Infra.Notification.Services;
 using Infra.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
@@ -88,7 +87,6 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddTransient<DataContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddSingleton<ISecurity, Crypto>();
 
 var app = builder.Build();
