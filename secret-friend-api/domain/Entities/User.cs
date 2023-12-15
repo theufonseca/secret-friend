@@ -9,6 +9,7 @@ namespace domain.Entities
 {
     public class User
     {
+        public int Id { get; private set; }
         public string UserName { get; private set; }
         public string Nickname { get; private set; }
 
@@ -22,8 +23,9 @@ namespace domain.Entities
             AddPassword(password);
         }
 
-        public User(string userName, string nickname, string password, string confirmationCode, DateTime endDateConfirmation, bool confirmed)
+        public User(int id, string userName, string nickname, string password)
         {
+            Id = id;
             AddUser(userName);
             AddNickname(nickname);
             AddPassword(password);

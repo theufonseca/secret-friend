@@ -11,5 +11,6 @@ namespace Application.Interfaces
     {
         Task<int> AddGameAsync(Game game);
         Task<Game?> GetById(int idGame);
+        Task UpdateGameStatus(int id, bool isFinished);
     }
 }

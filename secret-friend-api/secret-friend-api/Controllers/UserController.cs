@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using secret_friend_api.Models;
+using secret_friend_api.Models.Config;
+using secret_friend_api.Models.UserControllerDtos;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,7 +15,7 @@ namespace secret_friend_api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IMediator mediator;
         private readonly TokenConfiguration tokenConfig;
@@ -42,7 +43,7 @@ namespace secret_friend_api.Controllers
             var authClaims = new List<Claim>
             {
                 new (ClaimTypes.Name, response.User.Nickname),
-                new (ClaimTypes.Sid, response.User.UserName),
+                new (ClaimTypes.Sid, response.User.Id.ToString()),
             };
 
             var token = GetToken(authClaims);
@@ -50,10 +51,9 @@ namespace secret_friend_api.Controllers
         }
 
         [HttpPost("update")]
-        [AllowAnonymous]
-        public async Task<IActionResult> UpdateNickname([FromBody] UpdateNicknameRequest request)
+        public async Task<IActionResult> UpdateNickname([FromBody] UpdateNicknameDto input)
         {
-            var response = await mediator.Send(request);
+            var response = await mediator.Send(new UpdateNicknameRequest(UserId, input.Nickname));
             return Ok(response);
         }
 

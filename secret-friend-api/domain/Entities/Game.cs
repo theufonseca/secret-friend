@@ -11,8 +11,8 @@ namespace domain.Entities
         public int Id { get; private set; }
         public int IdUserHost { get; private set; }
         public string Name { get; private set; }
-        public int? MaxValue { get; private set; }
-        public int? MinValue { get; private set; }
+        public int? MaxPrice { get; private set; }
+        public int? MinPrice { get; private set; }
         public bool IsFinished { get; private set; }
 
         public Game(int id, int userIdHost, string name, int? maxValue, int? minValue, bool isFinished)
@@ -57,7 +57,7 @@ namespace domain.Entities
             if (maxValue < 0)
                 throw new Exception("MaxValue is invalid");
 
-            MaxValue = maxValue;
+            MaxPrice = maxValue;
         }
 
         public void AddMinValue(int minValue)
@@ -65,7 +65,7 @@ namespace domain.Entities
             if (minValue < 0)
                 throw new Exception("MinValue is invalid");
 
-            MinValue = minValue;
+            MinPrice = minValue;
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using secret_friend_api.Models;
+using secret_friend_api.Models.Config;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

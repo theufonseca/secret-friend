@@ -68,5 +68,16 @@ namespace domain.Entities
         {
             Option3 = option3;
         }
+
+        public void AddSecretFriend(int idUserSecretFriend)
+        {
+            if (idUserSecretFriend <= 0)
+                throw new Exception("IdUserSecretFriend must be greater than 0");
+
+            if(IdUserSecretFriend == IdUser)
+                throw new Exception("Secret friend must be different than user");
+
+            IdUserSecretFriend = idUserSecretFriend;
+        }
     }
 }

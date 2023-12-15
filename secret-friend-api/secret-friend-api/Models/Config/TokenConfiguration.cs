@@ -1,4 +1,4 @@
-﻿namespace secret_friend_api.Models
+﻿namespace secret_friend_api.Models.Config
 {
     public class TokenConfiguration
     {

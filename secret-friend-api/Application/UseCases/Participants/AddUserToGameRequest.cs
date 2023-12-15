@@ -9,20 +9,27 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Participants
 {
-    public record AddUserToGameRequest(int GameId, int UserId, string? Option1, string? Option2, string? Option3) : IRequest<AddUserToGameResponse>;
+    public record AddUserToGameRequest(int GameId, int UserHostId, int UserId, string? Option1, string? Option2, string? Option3) : IRequest<AddUserToGameResponse>;
     public record AddUserToGameResponse(int participantId);
 
     public class AddUserToGameRequestHandler : IRequestHandler<AddUserToGameRequest, AddUserToGameResponse>
     {
         private readonly IParticipantRepository participantRepository;
+        private readonly IGameRepository gameRepository;
 
-        public AddUserToGameRequestHandler(IParticipantRepository participantRepository)
+        public AddUserToGameRequestHandler(IParticipantRepository participantRepository, IGameRepository gameRepository)
         {
             this.participantRepository = participantRepository;
+            this.gameRepository = gameRepository;
         }
 
         public async Task<AddUserToGameResponse> Handle(AddUserToGameRequest request, CancellationToken cancellationToken)
         {
+            var game = await gameRepository.GetById(request.GameId);
+
+            if (game.IdUserHost != request.UserHostId)
+                throw new Exception("User is not the host of the game");
+
             var participant = await participantRepository.GetParticipantByUserIdAndGameIdAsync(request.UserId, request.GameId);
 
             if (participant is not null)

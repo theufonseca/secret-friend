@@ -65,5 +65,16 @@ namespace Infra.Data.Repository
 
             return participantsDto.Select(p => p.GetParticipant()).ToList();
         }
+
+        public async Task UpdateSecretFriend(int id, int idUserSecretFriend)
+        {
+            await _connection.ExecuteAsync(
+                "UPDATE participant SET IdUserSecretFriend = @IdUserSecretFriend WHERE Id = @Id",
+                new
+                {
+                    Id = id,
+                    IdUserSecretFriend = idUserSecretFriend
+                });
+        }
     }
 }

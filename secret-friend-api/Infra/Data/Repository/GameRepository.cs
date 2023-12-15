@@ -29,8 +29,8 @@ namespace Infra.Data.Repository
                 {
                     IdUserHost = game.IdUserHost,
                     Name = game.Name,
-                    MinValue = game.MinValue,
-                    MaxValue = game.MaxValue,
+                    MinValue = game.MinPrice,
+                    MaxValue = game.MaxPrice,
                     CreatedAt = DateTime.Now
                 });
 
@@ -47,6 +47,13 @@ namespace Infra.Data.Repository
                 return null;
 
             return gameDto.GetGame();
+        }
+
+        public async Task UpdateGameStatus(int id, bool isFinished)
+        {
+             await _connection.ExecuteAsync(
+                "UPDATE game SET isFinished = @IsFinished WHERE id = @Id",
+                new { Id = id, IsFinished = isFinished });
         }
     }
 }

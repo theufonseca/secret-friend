@@ -12,14 +12,14 @@ namespace Infra.Data.Models
         public int Id { get; set; }
         public int IdUserHost { get; set; }
         public string Name { get; set; }
-        public int? MaxValue { get; set; }
-        public int? MinValue { get; set; }
+        public int? MaxPrice { get; set; }
+        public int? MinPrice { get; set; }
         public bool IsFinished { get; set; }
 
 
         public Game GetGame()
         {
-            return new Game(Id, IdUserHost, Name, MaxValue, MinValue, IsFinished);
+            return new Game(Id, IdUserHost, Name, MaxPrice, MinPrice, IsFinished);
         }
     }
 }
