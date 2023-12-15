@@ -13,5 +13,6 @@ namespace Application.Interfaces
         Task<Participant?> GetParticipantByUserIdAndGameIdAsync(int userId, int gameId);
         Task<List<Participant>> GetParticipantsByGame(int idUserHost);
         Task UpdateSecretFriend(int id, int idUserSecretFriend);
+        Task DeleteParticipant(int gameId, int userId);
     }
 }

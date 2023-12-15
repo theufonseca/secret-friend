@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Participants
 {
-    public record AddUserToGameRequest(int GameId, int UserHostId, int UserId, string? Option1, string? Option2, string? Option3) : IRequest<AddUserToGameResponse>;
+    public record AddUserToGameRequest(string GameCode, int UserId, string? Option1, string? Option2, string? Option3) : IRequest<AddUserToGameResponse>;
     public record AddUserToGameResponse(int participantId);
 
     public class AddUserToGameRequestHandler : IRequestHandler<AddUserToGameRequest, AddUserToGameResponse>
@@ -25,17 +25,17 @@ namespace Application.UseCases.Participants
 
         public async Task<AddUserToGameResponse> Handle(AddUserToGameRequest request, CancellationToken cancellationToken)
         {
-            var game = await gameRepository.GetById(request.GameId);
+            var game = await gameRepository.GetByGameCode(request.GameCode);
 
-            if (game.IdUserHost != request.UserHostId)
-                throw new Exception("User is not the host of the game");
+            if (game is null)
+                throw new Exception("Game not found");
 
-            var participant = await participantRepository.GetParticipantByUserIdAndGameIdAsync(request.UserId, request.GameId);
+            var participant = await participantRepository.GetParticipantByUserIdAndGameIdAsync(request.UserId, game.Id);
 
             if (participant is not null)
                 throw new Exception("Participant aready added");
 
-            var newParticipant = new Participant(request.GameId, request.UserId);
+            var newParticipant = new Participant(game.Id, request.UserId);
 
             if (request.Option1 is not null)
                 newParticipant.AddOption1(request.Option1);

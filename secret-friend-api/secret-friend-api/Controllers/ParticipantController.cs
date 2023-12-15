@@ -23,7 +23,31 @@ namespace secret_friend_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserToGameDto input)
         {
-            var request = new AddUserToGameRequest(input.GameId, UserId, input.UserId, input.Option1, input.Option2, input.Option3);
+            var request = new AddUserToGameRequest(input.GameCode, UserId, input.Option1, input.Option2, input.Option3);
+            var response = await mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpGet("{gameId}")]
+        public async Task<IActionResult> Get(int gameId)
+        {
+            var request = new GetParticipantsRequest(gameId, UserId);
+            var response = await mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPost("remove")]
+        public async Task<IActionResult> RemoveParticipantByHost([FromBody] RemoveParticipantByHostDto input)
+        {
+            var request = new RemoveParticipantByHostRequest(UserId, input.GameId, input.UserIdToRemove);
+            var response = await mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPost("removeMySelf/{gameId}")]
+        public async Task<IActionResult> RemoveMySelf(int gameId)
+        {
+            var request = new RemoveMySelfRequest(gameId, UserId);
             var response = await mediator.Send(request);
             return Ok(response);
         }

@@ -11,6 +11,10 @@ namespace Application.Interfaces
     {
         Task<int> AddGameAsync(Game game);
         Task<Game?> GetById(int idGame);
+        Task<Game?> GetByGameCode(string gameCode);
+        Task<List<Game>> GetGamesByUserId(int userId);
+        Task UpdateGamePrice(int gameId, int? minPrice, int? maxPrice);
         Task UpdateGameStatus(int id, bool isFinished);
+        Task UpdateNewGameCode(int id, string newGameCode);
     }
 }

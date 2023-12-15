@@ -57,6 +57,13 @@ namespace secret_friend_api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var response = await mediator.Send(new GetUserInfoRequest(UserId));
+            return Ok(response);
+        }
+
         private TokenModel GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfig.SecretJwtKey!));

@@ -38,6 +38,17 @@ namespace Infra.Data.Repository
             return id;
         }
 
+        public async Task DeleteParticipant(int gameId, int userId)
+        {
+            await _connection.ExecuteAsync(
+                "DELETE FROM participant WHERE IdGame = @IdGame AND IdUser = @IdUser",
+                new
+                {
+                    IdGame = gameId,
+                    IdUser = userId
+                });
+        }
+
         public async Task<Participant?> GetParticipantByUserIdAndGameIdAsync(int userId, int gameId)
         {
             var participantDto = await _connection.QueryFirstOrDefaultAsync<ParticipantDto>(
