@@ -10,7 +10,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                echo 'Testing The Project..'
+                sh 'dotnet test secret-friend-api/'
             }
         }
         
