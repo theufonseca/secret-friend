@@ -4,19 +4,24 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo 'building...'
                 sh 'dotnet build secret-friend-api/'
             }
         }
         
         stage('Test') {
             steps {
+                echo 'testing...'
                 sh 'dotnet test secret-friend-api/'
             }
         }
         
         stage('Deploy') {
             steps {
-                echo 'Deploying The Project....'
+                echo 'deploying...'
+                sh 'dotnet publish -c Release secret-friend-api/ -o ./publish'
+                //sh 'cd ./publish && zip -r ../publish.zip .'
+                sh 'cd ./publish && dotnet secret-friend-api.dll --environment "Development"'
             }
         }
     }
