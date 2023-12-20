@@ -15,7 +15,7 @@ namespace secret_friend_api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserController : BaseController
+    public class UserCo ntroller : BaseController
     {
         private readonly IMediator mediator;
         private readonly TokenConfiguration tokenConfig;
