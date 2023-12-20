@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building The Project..'
+                sh 'dotnet build secret-friend-api/'
             }
         }
         
