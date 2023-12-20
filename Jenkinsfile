@@ -20,9 +20,10 @@ pipeline {
             steps {
                 echo 'deploying...'
                 sh 'dotnet publish -c Release secret-friend-api/ -o ./publish'
+                sh 'cd ./publish && pwd && dotnet secret-friend-api.dll --environment "Development"'
                 //sh 'cd ./publish && zip -r ../publish.zip .'
-                sh 'pwd'
-                sh 'cd ./publish && pwd && nohup dotnet secret-friend-api.dll --environment "Development" > output.log 2>&1 &'
+                //sh 'pwd'
+                //sh 'cd ./publish && pwd && nohup dotnet secret-friend-api.dll --environment "Development" > output.log 2>&1 &'
             }
         }
     }
