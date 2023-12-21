@@ -18,12 +18,14 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                echo 'deploying...'
-                sh 'dotnet publish -c Release secret-friend-api/ -o ./publish'
-                sh 'cd ./publish && pwd && dotnet secret-friend-api.dll --environment "Development"'
-                //sh 'cd ./publish && zip -r ../publish.zip .'
-                //sh 'pwd'
-                //sh 'cd ./publish && pwd && nohup dotnet secret-friend-api.dll --environment "Development" > output.log 2>&1 &'
+                echo 'Building Docker image...'
+                sh 'docker build -t joaomatheusfonseca/secret-friend-api:lastest .'
+
+                echo 'Logging in to Docker Hub...'
+                sh 'docker login -u joaomatheusfonseca -p fatec182unicamp'
+
+                echo 'Pushing Docker image to Docker Hub...'
+                sh 'docker push joaomatheusfonseca/friend:lastest'
             }
         }
     }
