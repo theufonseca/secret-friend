@@ -15,5 +15,14 @@ pipeline {
                 sh 'dotnet test secret-friend-api/'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                echo 'deploying...'
+                sh 'dotnet publish -c Release -o ./publish'
+                sh 'cd publish/'
+                sh 'dotnet secret-friend-api.dll'
+            }
+        }
     }
 }

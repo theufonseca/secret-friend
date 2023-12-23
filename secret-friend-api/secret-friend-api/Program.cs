@@ -12,8 +12,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-DotEnv.Load();
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+if (builder.Environment.IsDevelopment())
+    builder.Configuration.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -79,9 +81,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidAudience = tokenConfig.Audience,
-        ValidIssuer = tokenConfig.Issuer,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfig.SecretJwtKey!)),
+        ValidAudience = tokenConfig?.Audience ?? "",
+        ValidIssuer = tokenConfig?.Issuer ?? "",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfig?.SecretJwtKey ?? Guid.NewGuid().ToString()))
     };
 });
 
