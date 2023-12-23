@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1",
         new OpenApiInfo
         {
-            Title = "YouCourseApi",
+            Title = "Secret-friend-api",
             Version = "V1"
         });
 
