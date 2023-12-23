@@ -19,8 +19,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'deploying...'
+                echo 'dotnet publish...'
                 sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
+                echo 'cd publish...'
                 sh 'cd publish'
+                echo 'dotnet run...'
                 sh 'dotnet secret-friend-api.dll'
             }
         }
