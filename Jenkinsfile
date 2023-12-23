@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'deploying...'
                 sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
-                sh 'cd publish && dotnet secret-friend-api.dll'
+                sh 'cd publish && dotnet secret-friend-api.dll &'
             }
         }
     }
