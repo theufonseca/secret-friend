@@ -16,12 +16,12 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'deploying...'
-                sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
-                sh 'cd publish && dotnet secret-friend-api.dll'
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         echo 'deploying...'
+        //         sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
+        //         sh 'cd publish && dotnet secret-friend-api.dll'
+        //     }
+        // }
     }
 }
