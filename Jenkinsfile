@@ -39,7 +39,7 @@ def notifyGitHub(status) {
     def commitSHA = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
 
     def apiUrl = "https://api.github.com/repos/theufonseca/secret-friend/statuses/${commitSHA}"
-    def credentialsId = 'GitHubAccessToken'
+    def credentialsId = 'edb6dbc4-ed8c-44cb-b24c-e0745d3ddc2f'
 
     withCredentials([string(credentialsId: credentialsId, variable: 'GITHUB_TOKEN')]) {
         def payload = """{
