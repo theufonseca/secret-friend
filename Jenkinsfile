@@ -15,7 +15,17 @@ pipeline {
                 sh 'dotnet test secret-friend-api/'
             }
         }
-        post {
+        // stage('Deploy') {
+        //     steps {
+        //         echo 'deploying...'
+        //         sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
+        //         sh 'cd publish && dotnet secret-friend-api.dll'
+        //     }
+        // }
+        // Teste Jenkins/git webhook
+    }
+    
+    post {
             success {
                 script {
                     currentBuild.result = 'SUCCESS'
@@ -39,13 +49,4 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         echo 'deploying...'
-        //         sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
-        //         sh 'cd publish && dotnet secret-friend-api.dll'
-        //     }
-        // }
-        // Teste Jenkins/git webhook
-    }
 }
