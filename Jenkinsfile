@@ -30,7 +30,7 @@ pipeline {
                 currentBuild.result = 'SUCCESS'
                 echo 'Pipeline succeeded! Notifying GitHub.......'
                 githubNotify(
-                    status: 'success',
+                    status: 'SUCCESS',
                     description: 'Pipeline succeeded',
                     context: 'Jenkins'
                 )
@@ -41,7 +41,7 @@ pipeline {
                 currentBuild.result = 'FAILURE'
                 echo 'Pipeline failed! Notifying GitHub.......'
                 githubNotify(
-                    status: 'failure',
+                    status: 'FAILURE',
                     description: 'Pipeline failed',
                     context: 'Jenkins'
                 )
