@@ -4,14 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'building...'
+                echo 'building....'
                 sh 'dotnet build secret-friend-api/'
             }
         }
         
         stage('Test') {
             steps {
-                echo 'testing...'
+                echo 'testing....'
                 sh 'dotnet test secret-friend-api/'
             }
         }
