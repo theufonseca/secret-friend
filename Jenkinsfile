@@ -16,29 +16,29 @@ pipeline {
             }
         }
         post {
-        success {
-            script {
-                currentBuild.result = 'SUCCESS'
-                echo 'Pipeline succeeded! Notifying GitHub...'
-                githubNotify(
-                    status: 'success',
-                    description: 'Pipeline succeeded',
-                    context: 'Jenkins'
-                )
+            success {
+                script {
+                    currentBuild.result = 'SUCCESS'
+                    echo 'Pipeline succeeded! Notifying GitHub...'
+                    githubNotify(
+                        status: 'success',
+                        description: 'Pipeline succeeded',
+                        context: 'Jenkins'
+                    )
+                }
+            }
+            failure {
+                script {
+                    currentBuild.result = 'FAILURE'
+                    echo 'Pipeline failed! Notifying GitHub...'
+                    githubNotify(
+                        status: 'failure',
+                        description: 'Pipeline failed',
+                        context: 'Jenkins'
+                    )
+                }
             }
         }
-        failure {
-            script {
-                currentBuild.result = 'FAILURE'
-                echo 'Pipeline failed! Notifying GitHub...'
-                githubNotify(
-                    status: 'failure',
-                    description: 'Pipeline failed',
-                    context: 'Jenkins'
-                )
-            }
-        }
-    }
         // stage('Deploy') {
         //     steps {
         //         echo 'deploying...'
@@ -47,5 +47,5 @@ pipeline {
         //     }
         // }
         // Teste Jenkins/git webhook
-    
+    }
 }
