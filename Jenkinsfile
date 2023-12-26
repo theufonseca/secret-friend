@@ -15,45 +15,39 @@ pipeline {
                 sh 'dotnet test secret-friend-api/'
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         echo 'deploying...'
-        //         sh 'dotnet publish -c Release -o ./publish secret-friend-api/'
-        //         sh 'cd publish && dotnet secret-friend-api.dll'
-        //     }
-        // }
-        // Teste Jenkins/git webhook
     }
+    
     post {
         success {
             script {
                 currentBuild.result = 'SUCCESS'
                 echo 'Pipeline succeeded! Notifying GitHub.......'
-                githubNotify(
-                    status: 'SUCCESS',
-                    description: 'Pipeline succeeded',
-                    context: 'Jenkins',
-                    repo: 'theufonseca/secret-friend', // Substitua com o caminho do seu repositório no GitHub
-                    credentialsId: 'edb6dbc4-ed8c-44cb-b24c-e0745d3ddc2f', // Substitua com o ID de suas credenciais no Jenkins
-                    account: 'joaomatheus_fonseca@hotmail.com', // Substitua com o seu nome de usuário no GitHub
-                    sha: env.GIT_COMMIT // Use a variável de ambiente GIT_COMMIT para obter o SHA da confirmação atual
-                )
+                notifyGitHub('success')
             }
         }
         failure {
             script {
                 currentBuild.result = 'FAILURE'
                 echo 'Pipeline failed! Notifying GitHub.......'
-                githubNotify(
-                    status: 'FAILURE',
-                    description: 'Pipeline failed',
-                    context: 'Jenkins',
-                    repo: 'theufonseca/secret-friend', // Substitua com o caminho do seu repositório no GitHub
-                    credentialsId: 'edb6dbc4-ed8c-44cb-b24c-e0745d3ddc2f', // Substitua com o ID de suas credenciais no Jenkins
-                    account: 'joaomatheus_fonseca@hotmail.com', // Substitua com o seu nome de usuário no GitHub
-                    sha: env.GIT_COMMIT // Use a variável de ambiente GIT_COMMIT para obter o SHA da confirmação atual
-                )
+                notifyGitHub('failure')
             }
         }
+    }
+}
+
+def notifyGitHub(status) {
+    def commitSHA = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+
+    def apiUrl = "https://api.github.com/repos/theufonseca/secret-friend/statuses/${commitSHA}"
+    def credentialsId = 'edb6dbc4-ed8c-44cb-b24c-e0745d3ddc2f'
+
+    withCredentials([string(credentialsId: credentialsId, variable: 'GITHUB_TOKEN')]) {
+        def payload = """{
+            "state": "${status.toUpperCase()}",
+            "description": "Pipeline ${status.capitalize()}",
+            "context": "Jenkins"
+        }"""
+
+        sh "curl -X POST ${apiUrl} -H 'Authorization: token ${GITHUB_TOKEN}' -d '${payload}'"
     }
 }
