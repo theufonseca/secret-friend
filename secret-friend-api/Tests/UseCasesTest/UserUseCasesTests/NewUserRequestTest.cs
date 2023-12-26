@@ -30,7 +30,7 @@ namespace Tests.UseCasesTest.UserUseCasesTests
             userRepository.Verify(x => x.AddUserAsync(It.IsAny<User>()), Times.Once);
             userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.UserName == "YudiT")));
             userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.Nickname == "Yudi Tamashiro")));
-            userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.Password == "password")));
+            userRepository.Verify(x => x.AddUserAsync(It.Is<User>(o => o.Password == "passworde")));
         }
 
         [Test]
