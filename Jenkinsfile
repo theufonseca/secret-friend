@@ -23,5 +23,6 @@ pipeline {
         //         sh 'cd publish && dotnet secret-friend-api.dll'
         //     }
         // }
+        // Teste Jenkins/git webhook
     }
 }
