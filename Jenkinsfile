@@ -32,7 +32,11 @@ pipeline {
                 githubNotify(
                     status: 'SUCCESS',
                     description: 'Pipeline succeeded',
-                    context: 'Jenkins'
+                    context: 'Jenkins',
+                    repo: 'theufonseca/secret-friend', // Substitua com o caminho do seu repositório no GitHub
+                    credentialsId: 'github-access', // Substitua com o ID de suas credenciais no Jenkins
+                    account: 'joaomatheus_fonseca@hotmail.com', // Substitua com o seu nome de usuário no GitHub
+                    sha: env.GIT_COMMIT // Use a variável de ambiente GIT_COMMIT para obter o SHA da confirmação atual
                 )
             }
         }
@@ -43,7 +47,11 @@ pipeline {
                 githubNotify(
                     status: 'FAILURE',
                     description: 'Pipeline failed',
-                    context: 'Jenkins'
+                    context: 'Jenkins',
+                    repo: 'theufonseca/secret-friend', // Substitua com o caminho do seu repositório no GitHub
+                    credentialsId: 'github-access', // Substitua com o ID de suas credenciais no Jenkins
+                    account: 'joaomatheus_fonseca@hotmail.com', // Substitua com o seu nome de usuário no GitHub
+                    sha: env.GIT_COMMIT // Use a variável de ambiente GIT_COMMIT para obter o SHA da confirmação atual
                 )
             }
         }
